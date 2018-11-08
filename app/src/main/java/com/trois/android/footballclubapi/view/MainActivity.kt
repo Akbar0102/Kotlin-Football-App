@@ -13,7 +13,7 @@ import com.trois.android.footballclubapi.R.color.colorAccent
 import com.trois.android.footballclubapi.adapter.MainAdapter
 import com.trois.android.footballclubapi.api.ApiRepository
 import com.trois.android.footballclubapi.model.Team
-import com.trois.android.footballclubapi.presenter.MainPresenter
+import com.trois.android.footballclubapi.presenter.TeamsPresenter
 import com.trois.android.footballclubapi.util.invisible
 import com.trois.android.footballclubapi.util.visible
 import org.jetbrains.anko.*
@@ -21,7 +21,7 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), TeamsView {
 
     private lateinit var listTeam: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var spinner: Spinner
 
     private var teams: MutableList<Team> = mutableListOf()
-    private lateinit var presenter: MainPresenter
+    private lateinit var presenter: TeamsPresenter
     private lateinit var adapter: MainAdapter
     private lateinit var leagueName: String
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
         val request = ApiRepository()
         val gson = Gson()
-        presenter = MainPresenter(this, request, gson)
+        presenter = TeamsPresenter(this, request, gson)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
