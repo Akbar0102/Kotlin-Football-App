@@ -1,8 +1,8 @@
 package com.trois.android.footballclubapi.presenter
 
 import com.google.gson.Gson
-import com.trois.android.footballclubapi.ApiRepository
-import com.trois.android.footballclubapi.TheSportDBApi
+import com.trois.android.footballclubapi.api.ApiRepository
+import com.trois.android.footballclubapi.api.TheSportDBApi
 import com.trois.android.footballclubapi.model.TeamResponse
 import com.trois.android.footballclubapi.view.MainView
 import org.jetbrains.anko.doAsync

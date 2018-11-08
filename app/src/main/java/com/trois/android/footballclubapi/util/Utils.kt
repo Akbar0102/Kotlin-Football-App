@@ -1,4 +1,4 @@
-package com.trois.android.footballclubapi
+package com.trois.android.footballclubapi.util
 
 import android.view.View
 

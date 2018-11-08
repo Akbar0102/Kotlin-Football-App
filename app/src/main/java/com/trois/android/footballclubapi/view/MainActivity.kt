@@ -1,4 +1,4 @@
-package com.trois.android.footballclubapi
+package com.trois.android.footballclubapi.view
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.google.gson.Gson
+import com.trois.android.footballclubapi.R
 import com.trois.android.footballclubapi.R.color.colorAccent
 import com.trois.android.footballclubapi.adapter.MainAdapter
+import com.trois.android.footballclubapi.api.ApiRepository
 import com.trois.android.footballclubapi.model.Team
 import com.trois.android.footballclubapi.presenter.MainPresenter
-import com.trois.android.footballclubapi.view.MainView
+import com.trois.android.footballclubapi.util.invisible
+import com.trois.android.footballclubapi.util.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
