@@ -17,6 +17,8 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.trois.android.footballclubapi.R.color.colorAccent
 import com.trois.android.footballclubapi.R.color.colorPrimaryText
+import com.trois.android.footballclubapi.R.drawable.ic_add_to_favorites
+import com.trois.android.footballclubapi.R.drawable.ic_added_to_favorites
 import com.trois.android.footballclubapi.R.id.add_to_favorite
 import com.trois.android.footballclubapi.R.id.home
 import com.trois.android.footballclubapi.R.menu.detail_menu
@@ -27,7 +29,10 @@ import com.trois.android.footballclubapi.model.Team
 import com.trois.android.footballclubapi.util.invisible
 import com.trois.android.footballclubapi.util.visible
 import org.jetbrains.anko.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
@@ -52,6 +57,14 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.title = "Team Detail"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val intent = intent
+        id = intent.getStringExtra("id")
+        val request = ApiRepository()
+        val gson = Gson()
 
         linearLayout {
             lparams(matchParent, wrapContent)
@@ -107,19 +120,22 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
             }
         }
 
-        supportActionBar?.title = "Team Detail"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val intent = intent
-        id = intent.getStringExtra("id")
-        val request = ApiRepository()
-        val gson = Gson()
-
+        favoriteState()
         presenter = TeamDetailPresenter(this, request, gson)
         presenter.getTeamDetail(id)
 
         swipeRefreshLayout.onRefresh {
             presenter.getTeamDetail(id)
+        }
+    }
+
+    private fun favoriteState(){
+        database.use{
+            val result = select(Favorite.TABLE_FAVORITE)
+                    .whereArgs("(TEAM_ID = {id})",
+                            "id" to id)
+            val favorite = result.parseList(classParser<Favorite>())
+            if (!favorite.isEmpty()) isFavorite = true
         }
     }
 
@@ -145,6 +161,7 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(detail_menu, menu)
         menuItem = menu
+        setFavorite()
         return true
     }
 
@@ -155,7 +172,11 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
                 true
             }
             add_to_favorite -> {
-                addToFavorite()
+                if (isFavorite) removeFromFavorite() else addToFavorite()
+
+                isFavorite = !isFavorite
+                setFavorite()
+
                 true
             }
 
@@ -175,5 +196,23 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
         }catch (e: SQLiteConstraintException){
             snackbar(swipeRefreshLayout, e.localizedMessage).show()
         }
+    }
+
+    private fun removeFromFavorite(){
+        try{
+            database.use {
+                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})", "id" to id)
+            }
+            snackbar(swipeRefreshLayout, "Removed from favorite").show()
+        }catch (e: SQLiteConstraintException){
+            snackbar(swipeRefreshLayout, e.localizedMessage).show()
+        }
+    }
+
+    private fun setFavorite(){
+        if(isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_added_to_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_add_to_favorites)
     }
 }
