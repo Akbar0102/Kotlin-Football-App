@@ -1,4 +1,4 @@
-package com.trois.android.footballclubapi.view
+package com.trois.android.footballclubapi.favorite
 
 
 import android.support.v4.app.Fragment

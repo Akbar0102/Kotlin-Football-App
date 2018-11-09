@@ -1,4 +1,4 @@
-package com.trois.android.footballclubapi.adapter
+package com.trois.android.footballclubapi.teams
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -13,7 +13,8 @@ import com.trois.android.footballclubapi.R.id.team_name
 import com.trois.android.footballclubapi.model.Team
 import org.jetbrains.anko.*
 
-class MainAdapter (private val teams: List<Team>): RecyclerView.Adapter<TeamViewHolder>() {
+class TeamsAdapter (private val teams: List<Team>, private val listener: (Team) -> Unit): RecyclerView.Adapter<TeamViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         return TeamViewHolder(TeamUI().createView(AnkoContext.create(parent.context, parent)))
     }

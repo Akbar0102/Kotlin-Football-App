@@ -1,4 +1,4 @@
-package com.trois.android.footballclubapi.view
+package com.trois.android.footballclubapi.teams
 
 import com.trois.android.footballclubapi.model.Team
 

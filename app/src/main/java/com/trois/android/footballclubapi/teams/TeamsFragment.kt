@@ -1,12 +1,9 @@
-package com.trois.android.footballclubapi.view
+package com.trois.android.footballclubapi.teams
 
-
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import com.trois.android.footballclubapi.R.color.colorAccent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import com.trois.android.footballclubapi.R.array.league
-import com.trois.android.footballclubapi.adapter.TeamsAdapter
+import com.trois.android.footballclubapi.R.color.colorAccent
 import com.trois.android.footballclubapi.api.ApiRepository
+import com.trois.android.footballclubapi.detail.TeamDetailActivity
 import com.trois.android.footballclubapi.model.Team
-import com.trois.android.footballclubapi.presenter.TeamsPresenter
 import com.trois.android.footballclubapi.util.invisible
 import com.trois.android.footballclubapi.util.visible
 import org.jetbrains.anko.*
@@ -43,7 +40,7 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
         super.onActivityCreated(savedInstanceState)
 
         val spinnerItems = resources.getStringArray(league)
-        val spinnerAdapter = ArrayAdapter(ctx, R.layout.simple_spinner_dropdown_item, spinnerItems)
+        val spinnerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter
 
         adapter = TeamsAdapter(teams) {

@@ -1,10 +1,12 @@
-package com.trois.android.footballclubapi.view
+package com.trois.android.footballclubapi.home
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.trois.android.footballclubapi.R
 import com.trois.android.footballclubapi.R.id.favorites
 import com.trois.android.footballclubapi.R.id.teams
+import com.trois.android.footballclubapi.favorite.FavoriteTeamsFragment
+import com.trois.android.footballclubapi.teams.TeamsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
