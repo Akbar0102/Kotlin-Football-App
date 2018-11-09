@@ -20,7 +20,6 @@ import com.trois.android.footballclubapi.R.color.colorPrimaryText
 import com.trois.android.footballclubapi.R.drawable.ic_add_to_favorites
 import com.trois.android.footballclubapi.R.drawable.ic_added_to_favorites
 import com.trois.android.footballclubapi.R.id.add_to_favorite
-import com.trois.android.footballclubapi.R.id.home
 import com.trois.android.footballclubapi.R.menu.detail_menu
 import com.trois.android.footballclubapi.api.ApiRepository
 import com.trois.android.footballclubapi.db.database
@@ -167,7 +166,7 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            home -> {
+            android.R.id.home -> {
                 finish()
                 true
             }
